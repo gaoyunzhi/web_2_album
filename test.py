@@ -5,7 +5,7 @@ import web_2_album
 
 def test():
 	print(web_2_album.get(
-		'https://www.weibo.com/1648544895/IyEMGc6xw'))
+		'http://weibointl.api.weibo.cn/share/131595305.html'))
 	
 if __name__=='__main__':
 	test()
