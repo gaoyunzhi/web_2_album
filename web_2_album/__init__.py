@@ -94,3 +94,4 @@ def get(path, cap_limit = 1000, img_limit = 9, ok_no_image = False):
 		img, cap = getImages(b, img_limit), getCap(b2, path, cap_limit = cap_limit)
 		if cap and (ok_no_image or img):
 			return img, cap
+	return [], ''
