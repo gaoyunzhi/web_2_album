@@ -45,7 +45,7 @@ def getAuthor(b):
 		lambda x: x.find('a', class_='lnk-people'),
 	]
 	author = '原文'
-	for c in candidate:
+	for c in candidates:
 		try:
 			author = c(b)
 			break
