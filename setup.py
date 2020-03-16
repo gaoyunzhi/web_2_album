@@ -19,6 +19,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
+        'cached_url >= 0.0.6'
     ],
     python_requires='>=3.0',
 )
