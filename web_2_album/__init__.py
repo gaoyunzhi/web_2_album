@@ -24,12 +24,22 @@ def clearUrl(url):
 	url = url.replace('http://', '')
 	return url
 
+def getCandidate(candidates, input, default):
+	for c in candidates:
+		try:
+			result = c(input)
+			if result:
+				return result
+		except:
+			pass
+	return default
+
 def getQuote(b):
 	candidates = [
-		b.find('div', class_='weibo-text'), 
-		b.find('blockquote'),
+		lambda x: x.find('div', class_='weibo-text'), 
+		lambda x: x.find('blockquote'),
 	]
-	candidate = next((x for x in candidates if x), None) 
+	candidate = getCandidate(candidates, b, '')
 	if not candidate:
 		return ''
 	quote = candidate.text.strip()
@@ -44,13 +54,7 @@ def getAuthor(b):
 		lambda x: x.find('header').find('div', class_='m-text-box').find('a'),
 		lambda x: x.find('a', class_='lnk-people'),
 	]
-	author = '原文'
-	for c in candidates:
-		try:
-			author = c(b)
-			break
-		except:
-			pass
+	author = getCandidate(candidates, b, '原文')
 	return author.text.strip()	
 
 def getCap(b, path, cap_limit):
