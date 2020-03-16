@@ -12,7 +12,8 @@ import pic_cut
 
 def getCap(b, path, cap_limit):
 	quote = b.find('div', class_='weibo-text').text.strip()
-	author = b.find('header').find('div', class_='m-text-box').text.strip()
+	author = b.find('header').find('div', class_='m-text-box') \
+		.find('a').text.strip()
 	suffix = '[%s](%s)' % (author, path)
 	return cutCaption(quote, suffix, cap_limit)
 
