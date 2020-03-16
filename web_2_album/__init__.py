@@ -11,10 +11,51 @@ from telegram_util import cutCaption
 import pic_cut
 import readee
 
+def clearUrl(url):
+	if 'weibo' in url:
+		index = url.find('?')
+		if index > -1:
+			url = url[:index]
+	if url.endswith('/'):
+		url = url[:-1]
+	if '_' in url:
+		url = '[网页链接](%s)' % url
+	url = url.replace('https://', '')
+	url = url.replace('http://', '')
+	return url
+
+def getQuote(b):
+	candidates = [
+		b.find('div', class_='weibo-text'), 
+		b.find('blockquote'),
+	]
+	candidate = next((x for x in candidates if x), None) 
+	if not candidate:
+		return ''
+	quote = candidate.text.strip()
+	for link in candidate.find_all('a', title=True, href=True):
+		url = link['title']
+		url = clearUrl(export_to_telegraph.export(url) or url)
+		quote = quote.replace(link['href'], ' ' + url + ' ')
+	return quote
+
+def getAuthor(b):
+	candidates = [
+		lambda x: x.find('header').find('div', class_='m-text-box').find('a'),
+		lambda x: x.find('a', class_='lnk-people'),
+	]
+	author = '原文'
+	for c in candidate:
+		try:
+			author = c(b)
+			break
+		except:
+			pass
+	return author.text.strip()	
+
 def getCap(b, path, cap_limit):
-	quote = b.find('div', class_='weibo-text').text.strip()
-	author = b.find('header').find('div', class_='m-text-box') \
-		.find('a').text.strip()
+	quote = getQuote(b)
+	author = getAuthor(b)
 	suffix = ' [%s](%s)' % (author, path)
 	return cutCaption(quote, suffix, cap_limit)
 
