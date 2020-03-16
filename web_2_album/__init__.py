@@ -10,6 +10,14 @@ from bs4 import BeautifulSoup
 from telegram_util import cutCaption
 import pic_cut
 import readee
+import export_to_telegraph
+
+try:
+	with open('CREDENTIALS') as f:
+		credential = yaml.load(f, Loader=yaml.FullLoader)
+	export_to_telegraph.token = credential.get('telegraph_token')
+except:
+	pass
 
 def clearUrl(url):
 	if 'weibo' in url:
@@ -63,23 +71,26 @@ def getCap(b, path, cap_limit):
 	suffix = ' [%s](%s)' % (author, path)
 	return cutCaption(quote, suffix, cap_limit)
 
+def getSrc(img):
+	src = img.get('src') and img.get('src').strip()
+	if not src:
+		return 
+	if 'width: 100%;' in str(img.attrs):
+		return src
+	if img.get('class') and 'upload-pic' in img.get('class'):
+		return src
+	return
+
 def getImages(b, image_limit):
-	raw = []
-	for img in b.find_all('img'):
-		if img.get('src') and 'width: 100%;' in str(img.attrs):
-			raw.append(img.get('src'))
+	raw = [getSrc(img) for img in b.find_all('img')]
+	raw = [x for x in raw if x]
 	return pic_cut.getCutImages(raw, image_limit)
 
-def get(path, cap_limit = 1000, img_limit = 9):
+def get(path, cap_limit = 1000, img_limit = 9, ok_no_image = False):
 	content = cached_url.get(path)
 	b1 = readee.export(path, content=content)
 	b2 = BeautifulSoup(content, features="html.parser")
 	for b in [b1, b2]:
 		img, cap = getImages(b, img_limit), getCap(b2, path, cap_limit = cap_limit)
-		if img:
+		if cap and (ok_no_image or img):
 			return img, cap
-
-
-
-	
-
