@@ -23,6 +23,7 @@ setuptools.setup(
         'bs4',
         'telegram_util >= 0.0.37',
         'pic_cut >= 0.0.8',
+        'readee >= 0.0.24',
     ],
     python_requires='>=3.0',
 )
