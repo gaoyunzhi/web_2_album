@@ -27,11 +27,10 @@ def getImages(b, image_limit):
 
 def get(path, cap_limit = 1000, img_limit = 9):
 	content = cached_url.get(path)
-	b1 = readee.get(path, content=content)
+	b1 = readee.export(path, content=content)
 	b2 = BeautifulSoup(content, features="html.parser")
 	for b in [b1, b2]:
-		# add try
-		img, cap = getImages(b, img_limit), getCap(b, path, cap_limit = cap_limit)
+		img, cap = getImages(b, img_limit), getCap(b2, path, cap_limit = cap_limit)
 		if img:
 			return img, cap
 
