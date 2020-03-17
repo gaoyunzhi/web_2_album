@@ -19,12 +19,12 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        'cached_url >= 0.0.6'
+        'cached_url'
         'bs4',
-        'telegram_util >= 0.0.37',
-        'pic_cut >= 0.0.8',
-        'readee >= 0.0.24',
-        'export_to_telegraph >= 0.0.45'
+        'telegram_util',
+        'pic_cut',
+        'readee',
+        'export_to_telegraph'
     ],
     python_requires='>=3.0',
 )
