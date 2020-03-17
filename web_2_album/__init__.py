@@ -68,6 +68,8 @@ def getAuthor(b):
 
 def getCap(b, path, cap_limit):
 	quote = getQuote(b)
+	if not quote:
+		return ''
 	author = getAuthor(b)
 	suffix = ' [%s](%s)' % (author, path)
 	return cutCaption(quote, suffix, cap_limit)
@@ -82,17 +84,29 @@ def getSrc(img):
 		return src
 	return
 
+def compare(c1, c2):
+	# assume c1 does not have image, otherwise, we will return 
+	if c2[0]:
+		return c2
+	if len(c1[1]) > len(c2[1]):
+		return c1
+	return c2
+
 def getImages(b, image_limit):
 	raw = [getSrc(img) for img in b.find_all('img')]
 	raw = [x for x in raw if x]
 	return pic_cut.getCutImages(raw, image_limit)
 
-def get(path, cap_limit = 1000, img_limit = 9, ok_no_image = False):
+def get(path, cap_limit = 1000, text_limit = 4000, 
+		img_limit = 9, ok_no_image = False):
 	content = cached_url.get(path)
 	b1 = readee.export(path, content=content)
 	b2 = BeautifulSoup(content, features="html.parser")
+	candidate = [], ''
 	for b in [b1, b2]:
-		img, cap = getImages(b, img_limit), getCap(b2, path, cap_limit = cap_limit)
-		if cap and (ok_no_image or img):
+		img = getImages(b, img_limit)
+		cap = getCap(b2, path, cap_limit = cap_limit if img else text_limit)
+		if img:
 			return img, cap
-	return [], ''
+		candidate = compare(candidate, (img, cap))
+	return candidate
