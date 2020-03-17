@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="web_2_album",
-    version="0.0.11",
+    version="0.0.12",
     author="Yunzhi Gao",
     author_email="gaoyunzhi@gmail.com",
     description="Return photo list and caption (markdown format) from web.",
@@ -19,7 +19,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        'cached_url'
+        'cached_url',
         'bs4',
         'telegram_util',
         'pic_cut',
