@@ -50,7 +50,8 @@ def getQuote(b):
 	candidate = getCandidate(candidates, b, '')
 	if not candidate:
 		return ''
-	quote = candidate.get_text(separator="\n").strip()
+	quote = BeautifulSoup(str(candidate).replace('<br/>', '\n'), features='lxml')\
+		.text.strip()
 	for link in candidate.find_all('a', title=True, href=True):
 		url = link['title']
 		url = clearUrl(export_to_telegraph.export(url) or url)

@@ -27,4 +27,4 @@ def test(url, rotate=False):
 	
 if __name__=='__main__':
 	# test('http://weibointl.api.weibo.cn/share/131595305.html', rotate=True)
-	# test('http://www.douban.com/people/zhuyige/status/2869326971/')
+	test('http://www.douban.com/people/zhuyige/status/2869326971/')
