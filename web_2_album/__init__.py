@@ -50,7 +50,7 @@ def getQuote(b):
 	candidate = getCandidate(candidates, b, '')
 	if not candidate:
 		return ''
-	quote = candidate.text(separator="\n").strip()
+	quote = candidate.get_text(separator="\n").strip()
 	for link in candidate.find_all('a', title=True, href=True):
 		url = link['title']
 		url = clearUrl(export_to_telegraph.export(url) or url)
