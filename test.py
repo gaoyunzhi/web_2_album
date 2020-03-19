@@ -23,8 +23,11 @@ def test(url, rotate=False):
 			
 	group = [InputMediaPhoto(open(imgs[0], 'rb'), caption=cap, parse_mode='Markdown')] + \
 		[InputMediaPhoto(open(x, 'rb')) for x in imgs[1:]]
-	tele.bot.send_media_group(-1001198682178, group, timeout = 20*60)
+	if group:
+		tele.bot.send_media_group(-1001198682178, group, timeout = 20*60)
+	else:
+		tele.bot.send_message(-1001198682178, cap, timeout = 20*60)
 	
 if __name__=='__main__':
 	# test('http://weibointl.api.weibo.cn/share/131595305.html', rotate=True)
-	test('http://www.douban.com/people/zhuyige/status/2869326971/')
+	test('https://twitter.com/usabignews/status/1240660005528973312')
