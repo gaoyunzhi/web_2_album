@@ -6,6 +6,7 @@ from PIL import Image
 import yaml
 from telegram.ext import Updater
 from telegram import InputMediaPhoto, InputMediaVideo
+import cached_url
 
 with open('CREDENTIALS') as f:
 	CREDENTIALS = yaml.load(f, Loader=yaml.FullLoader)
@@ -23,8 +24,8 @@ def test(url, rotate=False):
 	if result.video:
 		with open('tmp/video.mp4', 'wb') as f:
 			f.write(cached_url.get(result.video, force_cache=True, mode='b'))
-		group = [InputMediaVideo('tmp/video.mp4', caption=result.cap, 
-			parse_mode='Markdown')]
+		group = [InputMediaVideo(open('tmp/video.mp4', 'rb'), 
+			caption=result.cap, parse_mode='Markdown')]
 		return tele.bot.send_media_group(-1001198682178, group, timeout = 20*60)
 			
 	if result.imgs:
