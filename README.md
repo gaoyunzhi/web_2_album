@@ -6,7 +6,10 @@ Return photo list and caption (markdown format) from web.
 
 ```
 import web_2_album
-photo_filename_list, caption = web_2_album.get(url)
+result = web_2_album.get(url)
+result.imgs
+result.video
+result.cap
 ```
 
 ## how to install
