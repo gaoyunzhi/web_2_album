@@ -74,7 +74,7 @@ def getSrc(img):
 def getImgs(b, img_limit):
 	raw = [getSrc(img) for img in b.find_all('img')]
 	raw = [x for x in raw if x]
-	return pic_cut.getCutImgs(raw, img_limit)
+	return pic_cut.getCutImages(raw, img_limit)
 
 def get(path, img_limit = 9):
 	content = cached_url.get(path)
