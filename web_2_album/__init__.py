@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import pic_cut
 import readee
 import export_to_telegraph
+from telegram_util import matchKey
 
 class Result(object):
 	def __init__(self):
@@ -35,27 +36,13 @@ def clearUrl(url):
 	url = url.replace('http://', '')
 	return url
 
-def getCandidate(candidates, input, default):
-	for c in candidates:
-		try:
-			result = c(input)
-			if result:
-				return result
-		except:
-			pass
-	return default
-
 def getCap(b):
-	candidates = [
-		lambda x: x.find('div', class_='weibo-text'), 
-		lambda x: x.find('blockquote'),
-	]
-	candidate = getCandidate(candidates, b, '')
-	if not candidate:
+	wrapper = b.find('div', class_='weibo-text') or b.find('blockquote')
+	if not wrapper:
 		return ''
-	quote = BeautifulSoup(str(candidate).replace('<br/>', '\n'), features='lxml')\
-		.text.strip()
-	for link in candidate.find_all('a', title=True, href=True):
+	text = str(wrapper).replace('<br/>', '\n')
+	quote = BeautifulSoup(text, features='lxml').text.strip()
+	for link in wrapper.find_all('a', title=True, href=True):
 		url = link['title']
 		url = clearUrl(export_to_telegraph.export(url) or url)
 		quote = quote.replace(link['href'], ' ' + url + ' ')
@@ -65,9 +52,10 @@ def getSrc(img):
 	src = img.get('src') and img.get('src').strip()
 	if not src:
 		return 
-	if 'width: 100%;' in str(img.attrs):
-		return src
-	if img.get('class') and 'upload-pic' in img.get('class'):
+	if not img.parent or not img.parent.parent:
+		return 
+	wrapper = img.parent.parent
+	if matchKey(str(wrapper.get('class')) or '', ['f-m-img', 'group-pic']):
 		return src
 	return
 
@@ -79,7 +67,6 @@ def getImgs(b, img_limit):
 def get(path, img_limit = 9):
 	content = cached_url.get(path)
 	b = readee.export(path, content=content)
-	# b2 = BeautifulSoup(content, features="html.parser")
 	result = Result()
 	result.imgs = getImgs(b, img_limit)
 	result.cap = getCap(b)

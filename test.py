@@ -15,11 +15,10 @@ def test(url, rotate=False):
 	result = web_2_album.get(url)
 
 	if rotate:
-		for index, img_path in enumerate(result.imgs):
+		for img_path in result.imgs:
 			img = Image.open(img_path)
-			img = Image.rotate(180)
+			img = img.rotate(180)
 			img.save(img_path)
-			img.save('tmp_img/%s.jpg' % index)
 			
 	if result.imgs:
 		group = [InputMediaPhoto(open(result.imgs[0], 'rb'), 
@@ -30,6 +29,5 @@ def test(url, rotate=False):
 		tele.bot.send_message(-1001198682178, result.cap, timeout = 20*60)
 	
 if __name__=='__main__':
-	test('http://weibointl.api.weibo.cn/share/131595305.html', rotate=True)
-	test('https://twitter.com/usabignews/status/1240660005528973312')
+	# test('http://weibointl.api.weibo.cn/share/131595305.html', rotate=True)
 	test('http://www.douban.com/people/RonaldoLuiz/status/2877273534/')
