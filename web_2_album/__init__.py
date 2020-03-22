@@ -98,7 +98,7 @@ def getImages(b, image_limit):
 	return pic_cut.getCutImages(raw, image_limit)
 
 def get(path, cap_limit = 1000, text_limit = 4000, 
-		img_limit = 9, ok_no_image = False):
+		img_limit = 9):
 	content = cached_url.get(path)
 	b1 = readee.export(path, content=content)
 	b2 = BeautifulSoup(content, features="html.parser")
