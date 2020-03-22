@@ -5,7 +5,6 @@ name = 'web_2_album'
 
 import cached_url
 from bs4 import BeautifulSoup
-import pic_cut
 import readee
 import export_to_telegraph
 from telegram_util import matchKey
@@ -40,10 +39,9 @@ def getSrc(img):
 		return src
 	return
 
-def getImgs(b, img_limit):
+def getImgs(b):
 	raw = [getSrc(img) for img in b.find_all('img')]
-	raw = [x for x in raw if x]
-	return pic_cut.getCutImages(raw, img_limit)
+	return [x for x in raw if x]
 
 def getVideo(b):
 	for video in b.find_all('video'):
@@ -54,11 +52,11 @@ def getVideo(b):
 			continue
 		return video['src']
 
-def get(path, img_limit = 9):
+def get(path):
 	content = cached_url.get(path)
 	b = readee.export(path, content=content)
 	result = Result()
-	result.imgs = getImgs(b, img_limit)
+	result.imgs = getImgs(b)
 	result.cap = getCap(b)
 	result.video = getVideo(b)
 	return result

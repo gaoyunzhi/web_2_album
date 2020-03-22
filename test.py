@@ -7,6 +7,8 @@ import yaml
 from telegram.ext import Updater
 from telegram import InputMediaPhoto, InputMediaVideo
 import cached_url
+import pic_cut
+from telegram_util import cutCaption
 
 with open('CREDENTIALS') as f:
 	CREDENTIALS = yaml.load(f, Loader=yaml.FullLoader)
@@ -27,14 +29,20 @@ def test(url, rotate=False):
 		group = [InputMediaVideo(open('tmp/video.mp4', 'rb'), 
 			caption=result.cap, parse_mode='Markdown')]
 		return tele.bot.send_media_group(-1001198682178, group, timeout = 20*60)
-			
-	if result.imgs:
-		group = [InputMediaPhoto(open(result.imgs[0], 'rb'), 
-			caption=result.cap, parse_mode='Markdown')] + \
-			[InputMediaPhoto(open(x, 'rb')) for x in result.imgs[1:]]
+		
+
+	suffix = '[source](%s)' % url
+	imgs = pic_cut.getCutImages(result.imgs, 9)	
+	if imgs:
+		imgs = pic_cut.getCutImages(result.imgs, 9)
+		group = [InputMediaPhoto(open(imgs[0], 'rb'), 
+			caption=cutCaption(result.cap, suffix, 1000), parse_mode='Markdown')] + \
+			[InputMediaPhoto(open(x, 'rb')) for x in imgs]
 		return tele.bot.send_media_group(-1001198682178, group, timeout = 20*60)
 	
-	tele.bot.send_message(-1001198682178, result.cap, timeout = 20*60)
+
+	tele.bot.send_message(-1001198682178, cutCaption(result.cap, suffix, 4000), 
+		timeout = 20*60)
 	
 if __name__=='__main__':
 	# test('http://weibointl.api.weibo.cn/share/131595305.html', rotate=True)
