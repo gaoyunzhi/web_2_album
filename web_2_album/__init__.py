@@ -23,30 +23,11 @@ try:
 except:
 	pass
 
-def clearUrl(url):
-	if 'weibo' in url:
-		index = url.find('?')
-		if index > -1:
-			url = url[:index]
-	if url.endswith('/'):
-		url = url[:-1]
-	if '_' in url:
-		url = '[网页链接](%s)' % url
-	url = url.replace('https://', '')
-	url = url.replace('http://', '')
-	return url
-
 def getCap(b):
 	wrapper = b.find('div', class_='weibo-text') or b.find('blockquote')
 	if not wrapper:
 		return ''
-	text = str(wrapper).replace('<br/>', '\n')
-	quote = BeautifulSoup(text, features='lxml').text.strip()
-	for link in wrapper.find_all('a', title=True, href=True):
-		url = link['title']
-		url = clearUrl(export_to_telegraph.export(url) or url)
-		quote = quote.replace(link['href'], ' ' + url + ' ')
-	return quote
+	return export_to_telegraph.exportAllInText(wrapper)
 
 def getSrc(img):
 	src = img.get('src') and img.get('src').strip()
@@ -64,10 +45,20 @@ def getImgs(b, img_limit):
 	raw = [x for x in raw if x]
 	return pic_cut.getCutImages(raw, img_limit)
 
+def getVideo(b):
+	for video in b.find_all('video'):
+		if not video.parent or not video.parent.parent:
+			continue
+		wrapper = video.parent.parent
+		if not matchKey(str(wrapper.get('class')), ['video_info']):
+			continue
+		return wrapper['src']
+
 def get(path, img_limit = 9):
 	content = cached_url.get(path)
 	b = readee.export(path, content=content)
 	result = Result()
 	result.imgs = getImgs(b, img_limit)
 	result.cap = getCap(b)
+	result.video = getVideo(b)
 	return result
