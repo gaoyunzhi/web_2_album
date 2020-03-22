@@ -50,9 +50,9 @@ def getVideo(b):
 		if not video.parent or not video.parent.parent:
 			continue
 		wrapper = video.parent.parent
-		if not matchKey(str(wrapper.get('class')), ['video_info']):
+		if not matchKey(str(wrapper.get('id')), ['video_info']):
 			continue
-		return wrapper['src']
+		return video['src']
 
 def get(path, img_limit = 9):
 	content = cached_url.get(path)

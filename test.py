@@ -21,7 +21,9 @@ def test(url, rotate=False):
 			img.save(img_path)
 
 	if result.video:
-		group = [InputMediaVideo(result.video, caption=result.cap, 
+		with open('tmp/video.mp4', 'wb') as f:
+			f.write(cached_url.get(result.video, force_cache=True, mode='b'))
+		group = [InputMediaVideo('tmp/video.mp4', caption=result.cap, 
 			parse_mode='Markdown')]
 		return tele.bot.send_media_group(-1001198682178, group, timeout = 20*60)
 			
