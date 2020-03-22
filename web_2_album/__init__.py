@@ -3,14 +3,17 @@
 
 name = 'web_2_album'
 
-import math
-import os
 import cached_url
 from bs4 import BeautifulSoup
-from telegram_util import cutCaption
 import pic_cut
 import readee
 import export_to_telegraph
+
+class Result(object):
+	def __init__(self):
+		self.imgs = []
+		self.cap = ''
+		self.video = ''
 
 try:
 	with open('CREDENTIALS') as f:
@@ -42,7 +45,7 @@ def getCandidate(candidates, input, default):
 			pass
 	return default
 
-def getQuote(b):
+def getCap(b):
 	candidates = [
 		lambda x: x.find('div', class_='weibo-text'), 
 		lambda x: x.find('blockquote'),
@@ -58,22 +61,6 @@ def getQuote(b):
 		quote = quote.replace(link['href'], ' ' + url + ' ')
 	return quote
 
-def getAuthor(b):
-	candidates = [
-		lambda x: x.find('header').find('div', class_='m-text-box').find('a'),
-		lambda x: x.find('a', class_='lnk-people'),
-	]
-	author = getCandidate(candidates, b, '原文')
-	return author.text.strip()	
-
-def getCap(b, path, cap_limit):
-	quote = getQuote(b)
-	if not quote:
-		return ''
-	author = getAuthor(b)
-	suffix = ' [%s](%s)' % (author, path)
-	return cutCaption(quote, suffix, cap_limit)
-
 def getSrc(img):
 	src = img.get('src') and img.get('src').strip()
 	if not src:
@@ -84,29 +71,16 @@ def getSrc(img):
 		return src
 	return
 
-def compare(c1, c2):
-	# assume c1 does not have image, otherwise, we will return 
-	if c2[0]:
-		return c2
-	if len(c1[1]) > len(c2[1]):
-		return c1
-	return c2
-
-def getImages(b, image_limit):
+def getImgs(b, img_limit):
 	raw = [getSrc(img) for img in b.find_all('img')]
 	raw = [x for x in raw if x]
-	return pic_cut.getCutImages(raw, image_limit)
+	return pic_cut.getCutImgs(raw, img_limit)
 
-def get(path, cap_limit = 1000, text_limit = 4000, 
-		img_limit = 9):
+def get(path, img_limit = 9):
 	content = cached_url.get(path)
-	b1 = readee.export(path, content=content)
-	b2 = BeautifulSoup(content, features="html.parser")
-	candidate = [], ''
-	for b in [b1, b2]:
-		img = getImages(b, img_limit)
-		cap = getCap(b2, path, cap_limit = cap_limit if img else text_limit)
-		if img:
-			return img, cap
-		candidate = compare(candidate, (img, cap))
-	return candidate
+	b = readee.export(path, content=content)
+	# b2 = BeautifulSoup(content, features="html.parser")
+	result = Result()
+	result.imgs = getImgs(b, img_limit)
+	result.cap = getCap(b)
+	return result
