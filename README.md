@@ -10,7 +10,11 @@ result = web_2_album.get(url)
 result.imgs
 result.video
 result.cap
+
 ```
+
+### optional param
+- force_cache
 
 ## how to install
 

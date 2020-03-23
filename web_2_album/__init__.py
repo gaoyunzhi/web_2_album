@@ -55,8 +55,8 @@ def getVideo(b):
 			continue
 		return video['src']
 
-def get(path):
-	content = cached_url.get(path)
+def get(path, force_cache=False):
+	content = cached_url.get(path, force_cache=force_cache)
 	b = readee.export(path, content=content)
 	result = Result()
 	result.imgs = getImgs(b)
