@@ -13,7 +13,7 @@ result.cap
 
 ```
 
-### optional param
+### Optional param
 - force_cache
 
 ## how to install
