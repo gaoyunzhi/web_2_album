@@ -14,7 +14,8 @@ class Result(object):
 		self.imgs = []
 		self.cap = ''
 		self.video = ''
-		self.cap_html = ''
+		self.cap_html = '' # weibo status only
+		self.title = '' # weibo status only
 
 	def empty(self):
 		return (not self.imgs) and (not self.cap) and (not self.video)
