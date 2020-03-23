@@ -14,6 +14,7 @@ class Result(object):
 		self.imgs = []
 		self.cap = ''
 		self.video = ''
+		self.cap_html = ''
 
 	def empty(self):
 		return (not self.imgs) and (not self.cap) and (not self.video)
