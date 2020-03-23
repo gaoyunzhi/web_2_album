@@ -8,17 +8,7 @@ from bs4 import BeautifulSoup
 import readee
 import export_to_telegraph
 from telegram_util import matchKey
-
-class Result(object):
-	def __init__(self):
-		self.imgs = []
-		self.cap = ''
-		self.video = ''
-		self.cap_html = '' # weibo status only
-		self.title = '' # weibo status only
-
-	def empty(self):
-		return (not self.imgs) and (not self.cap) and (not self.video)
+from telegram_util import AlbumResult as Result
 
 try:
 	with open('CREDENTIALS') as f:
