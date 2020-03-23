@@ -15,6 +15,9 @@ class Result(object):
 		self.cap = ''
 		self.video = ''
 
+	def empty(self):
+		return (not self.imgs) and (not self.cap) and (not self.video)
+
 try:
 	with open('CREDENTIALS') as f:
 		credential = yaml.load(f, Loader=yaml.FullLoader)
