@@ -18,7 +18,8 @@ except:
 	pass
 
 def getCap(b):
-	wrapper = b.find('div', class_='weibo-text') or b.find('blockquote')
+	wrapper = b.find('div', class_='weibo-text') or b.find('blockquote') or \
+		b.find('div', class_='post f')
 	if not wrapper:
 		return ''
 	return export_to_telegraph.exportAllInText(wrapper)
