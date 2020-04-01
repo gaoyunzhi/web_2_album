@@ -10,6 +10,8 @@ import export_to_telegraph
 from telegram_util import matchKey
 from telegram_util import AlbumResult as Result
 
+IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper']
+
 try:
 	with open('CREDENTIALS') as f:
 		credential = yaml.load(f, Loader=yaml.FullLoader)
@@ -19,7 +21,7 @@ except:
 
 def getCap(b):
 	wrapper = b.find('div', class_='weibo-text') or b.find('blockquote') or \
-		b.find('div', class_='post f')
+		b.find('div', class_='post f') or b.find('div', class_='topic-richtext')
 	if not wrapper:
 		return ''
 	return export_to_telegraph.exportAllInText(wrapper)
@@ -31,7 +33,7 @@ def getSrc(img):
 	if not img.parent or not img.parent.parent:
 		return 
 	wrapper = img.parent.parent
-	if matchKey(str(wrapper.get('class')) or '', ['f-m-img', 'group-pic']):
+	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
 		return src
 	return
 
@@ -51,6 +53,8 @@ def getVideo(b):
 def get(path, force_cache=False):
 	content = cached_url.get(path, force_cache=force_cache)
 	b = readee.export(path, content=content)
+	with open('tmp/readee.html', 'w') as f:
+		f.write(str(b))
 	result = Result()
 	result.imgs = getImgs(b)
 	result.cap = getCap(b)
