@@ -16,7 +16,7 @@ def test(url, rotate=False):
 	album_sender.send(chat, url, result, rotate=rotate)
 	
 if __name__=='__main__':
-	test('https://www.douban.com/group/topic/169845329/')
+	test('http://www.douban.com/group/topic/164367074')
 	# test('https://www.douban.com/people/ayongli/status/2832255859/')
 	# test('http://jandan.net/2020/03/30/gamer-girls.html')
 	# test('http://weibointl.api.weibo.cn/share/131595305.html', rotate=True)

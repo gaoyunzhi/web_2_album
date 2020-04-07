@@ -5,7 +5,6 @@ name = 'web_2_album'
 
 import cached_url
 from bs4 import BeautifulSoup
-import readee
 import export_to_telegraph
 from telegram_util import matchKey
 from telegram_util import AlbumResult as Result
@@ -52,9 +51,7 @@ def getVideo(b):
 
 def get(path, force_cache=False):
 	content = cached_url.get(path, force_cache=force_cache)
-	b = readee.export(path, content=content)
-	with open('tmp/readee.html', 'w') as f:
-		f.write(str(b))
+	b = BeautifulSoup(content, features='lxml')
 	result = Result()
 	result.imgs = getImgs(b)
 	result.cap = getCap(b)

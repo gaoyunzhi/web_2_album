@@ -23,7 +23,6 @@ setuptools.setup(
         'bs4',
         'telegram_util',
         'pic_cut',
-        'readee',
         'export_to_telegraph'
     ],
     python_requires='>=3.0',
