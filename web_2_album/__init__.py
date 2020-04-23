@@ -22,9 +22,12 @@ def getCap(b):
 	wrapper = b.find('div', class_='weibo-text') or \
 		b.find('div', class_='post f') or b.find('div', class_='topic-richtext')
 	if 'douban' in str(b):
-		wrapper = b.find('blockquote')
+		wrapper = b.find('blockquote') or wrapper
 	if 'zhihu' in str(b):
-		return cutCaption(b.find('div', class_='RichContent-inner').text, '', 200)
+		answer = b.find('div', class_='RichContent-inner')
+		answer = answer and answer.text.strip()
+		if answer:
+			return cutCaption(answer, '', 200)
 	if not wrapper:
 		return ''
 	return export_to_telegraph.exportAllInText(wrapper)
