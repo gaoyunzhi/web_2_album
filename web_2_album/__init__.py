@@ -6,7 +6,7 @@ name = 'web_2_album'
 import cached_url
 from bs4 import BeautifulSoup
 import export_to_telegraph
-from telegram_util import matchKey
+from telegram_util import matchKey, cutCaption
 from telegram_util import AlbumResult as Result
 
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 'RichText']
@@ -23,12 +23,14 @@ def getCap(b):
 		b.find('div', class_='post f') or b.find('div', class_='topic-richtext')
 	if 'douban' in str(b):
 		wrapper = b.find('blockquote')
+	if 'zhihu' in str(b):
+		return cutCaption(b.find('div', class_='RichContent-inner').text, '', 200)
 	if not wrapper:
 		return ''
 	return export_to_telegraph.exportAllInText(wrapper)
 
 def getSrc(img):
-	src = img.get('data-original') or \
+	src = img.get('data-original') or img.get('data-actualsrc') or \
 		(img.get('src') and img.get('src').strip())
 	if not src:
 		return 
