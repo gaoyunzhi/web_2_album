@@ -34,6 +34,7 @@ def getSrc(img):
 	if not img.parent or not img.parent.parent:
 		return 
 	wrapper = img.parent.parent
+	print(str(wrapper.get('class')))
 	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
 		return src
 	return
