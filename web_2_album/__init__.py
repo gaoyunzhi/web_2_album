@@ -9,7 +9,7 @@ import export_to_telegraph
 from telegram_util import matchKey
 from telegram_util import AlbumResult as Result
 
-IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper']
+IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 'RichText']
 
 try:
 	with open('CREDENTIALS') as f:
@@ -28,13 +28,13 @@ def getCap(b):
 	return export_to_telegraph.exportAllInText(wrapper)
 
 def getSrc(img):
-	src = img.get('src') and img.get('src').strip()
+	src = img.get('data-actualsrc') or \
+		(img.get('src') and img.get('src').strip())
 	if not src:
 		return 
 	if not img.parent or not img.parent.parent:
 		return 
 	wrapper = img.parent.parent
-	print(str(wrapper.get('class')))
 	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
 		return src
 	return
