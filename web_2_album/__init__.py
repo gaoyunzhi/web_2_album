@@ -28,7 +28,7 @@ def getCap(b):
 	return export_to_telegraph.exportAllInText(wrapper)
 
 def getSrc(img):
-	src = img.get('data-actualsrc') or \
+	src = img.get('data-original') or \
 		(img.get('src') and img.get('src').strip())
 	if not src:
 		return 
