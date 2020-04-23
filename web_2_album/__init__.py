@@ -19,8 +19,10 @@ except:
 	pass
 
 def getCap(b):
-	wrapper = b.find('div', class_='weibo-text') or b.find('blockquote') or \
+	wrapper = b.find('div', class_='weibo-text') or \
 		b.find('div', class_='post f') or b.find('div', class_='topic-richtext')
+	if 'douban' in str(b):
+		wrapper = b.find('blockquote')
 	if not wrapper:
 		return ''
 	return export_to_telegraph.exportAllInText(wrapper)
