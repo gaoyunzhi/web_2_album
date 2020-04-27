@@ -9,7 +9,8 @@ import export_to_telegraph
 from telegram_util import matchKey, cutCaption
 from telegram_util import AlbumResult as Result
 
-IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 'RichText']
+IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
+	'RichText', 'image-container']
 
 try:
 	with open('CREDENTIALS') as f:
