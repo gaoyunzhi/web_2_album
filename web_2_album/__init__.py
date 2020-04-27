@@ -54,6 +54,10 @@ def getVideo(b):
 		if not video.parent or not video.parent.parent:
 			continue
 		wrapper = video.parent.parent
+		source = video.find('source')
+		source = source and source['src']
+		if source:
+			return source
 		if not matchKey(str(wrapper.get('id')), ['video_info']):
 			continue
 		return video['src']
