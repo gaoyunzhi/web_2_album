@@ -16,4 +16,4 @@ def test(url, rotate=False):
 	album_sender.send(chat, url, result, rotate=rotate)
 	
 if __name__=='__main__':
-	test('https://www.zhihu.com/question/24762672/answer/33939678')
+	test('https://www.douban.com/note/760314908/')
