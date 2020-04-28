@@ -19,12 +19,12 @@ try:
 except:
 	pass
 
-def getCap(b):
+def getCap(b, path):
 	wrapper = b.find('div', class_='weibo-text') or \
 		b.find('div', class_='post f') or b.find('div', class_='topic-richtext')
-	if 'douban' in str(b):
+	if 'douban' in path:
 		wrapper = b.find('blockquote') or wrapper
-	if 'zhihu' in str(b):
+	if 'zhihu' in path:
 		answer = b.find('div', class_='RichContent-inner')
 		answer = answer and answer.text.strip()
 		if answer:
@@ -67,6 +67,6 @@ def get(path, force_cache=False):
 	b = BeautifulSoup(content, features='lxml')
 	result = Result()
 	result.imgs = getImgs(b)
-	result.cap = getCap(b)
+	result.cap = getCap(b, path)
 	result.video = getVideo(b)
 	return result
