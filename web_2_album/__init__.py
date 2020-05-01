@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import export_to_telegraph
 from telegram_util import matchKey, cutCaption
 from telegram_util import AlbumResult as Result
+import readee
 
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
 	'RichText', 'image-container']
@@ -32,6 +33,16 @@ def getCap(b, path):
 	if not wrapper:
 		return ''
 	return export_to_telegraph.exportAllInText(wrapper)
+
+def getCapForce(b, path):
+	# don't know if this is the right thing to do, revisit if needed
+	center = readee.export(path, content = str(b))
+	with open('tmp/center.html', 'w') as f:
+		f.write(str(center))
+	try:
+		return cutCaption(center.get_text(separator='\n').strip(), '', 200)
+	except:
+		return ''
 
 def getSrc(img):
 	src = img.get('data-original') or img.get('data-actualsrc') or \
@@ -68,5 +79,8 @@ def get(path, force_cache=False):
 	result = Result()
 	result.imgs = getImgs(b)
 	result.cap = getCap(b, path)
+	if result.imgs and not result.cap:
+		# don't know if this is the right thing to do, revisit if needed
+		result.cap = getCapForce(b, path)
 	result.video = getVideo(b)
 	return result
