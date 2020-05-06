@@ -17,4 +17,4 @@ def test(url, rotate=False):
 	album_sender.send(chat, url, result, rotate=rotate)
 	
 if __name__=='__main__':
-	test('https://www.douban.com/group/topic/174521906/?dt_platform=com.douban.activity.wechat_friends&dt_dapp=1')
+	test('https://www.sciencedaily.com/releases/2020/05/200505164640.htm')

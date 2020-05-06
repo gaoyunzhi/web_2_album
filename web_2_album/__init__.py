@@ -21,8 +21,10 @@ except:
 	pass
 
 def getCap(b, path):
-	wrapper = b.find('div', class_='weibo-text') or \
-		b.find('div', class_='post f') or b.find('div', class_='topic-richtext')
+	wrapper = (b.find('div', class_='weibo-text') or 
+		b.find('div', class_='post f') or 
+		b.find('div', class_='topic-richtext') or
+		b.find('p', id='first', class_='lead'))
 	if 'douban' in path:
 		wrapper = b.find('blockquote') or wrapper
 	if 'zhihu' in path:
