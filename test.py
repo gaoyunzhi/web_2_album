@@ -13,9 +13,9 @@ chat = tele.bot.get_chat(-1001198682178)
 
 def test(url, rotate=False):
 	result = web_2_album.get(url)
-	print(result)
+	# print(result)
 	album_sender.send(chat, url, result, rotate=rotate)
 	
 if __name__=='__main__':
-	test('https://www.reddit.com/r/PoliticalCompassMemes/comments/gep6km/the_political_compass_but_its_chinese_internet/')
-	# test('https://card.weibo.com/article/m/show/id/2309404499387479883873')
+	# test('https://www.reddit.com/r/PoliticalCompassMemes/comments/gep6km/the_political_compass_but_its_chinese_internet/')
+	test('https://card.weibo.com/article/m/show/id/2309404499387479883873')
