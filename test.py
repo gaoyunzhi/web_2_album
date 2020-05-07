@@ -17,4 +17,4 @@ def test(url, rotate=False):
 	album_sender.send(chat, url, result, rotate=rotate)
 	
 if __name__=='__main__':
-	test('https://www.sciencedaily.com/releases/2020/05/200505164640.htm')
+	test('https://www.reddit.com/r/PoliticalCompassMemes/comments/gep6km/the_political_compass_but_its_chinese_internet/')

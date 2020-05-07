@@ -37,6 +37,8 @@ def getCap(b, path):
 	return export_to_telegraph.exportAllInText(wrapper)
 
 def getCapForce(b, path):
+	if b.find('h1'):
+		return b.find('h1').text
 	# don't know if this is the right thing to do, revisit if needed
 	center = readee.export(path, content = str(b))
 	with open('tmp/center.html', 'w') as f:
@@ -46,20 +48,24 @@ def getCapForce(b, path):
 	except:
 		return ''
 
-def getSrc(img):
+def getSrc(img, path):
 	src = img.get('data-original') or img.get('data-actualsrc') or \
 		(img.get('src') and img.get('src').strip())
 	if not src:
 		return 
 	if not img.parent or not img.parent.parent:
 		return 
+	if 'reddit' in path:
+		if img.parent.name != 'a':
+			return
+		return img.parent['href']
 	wrapper = img.parent.parent
 	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
 		return src
 	return
 
-def getImgs(b):
-	raw = [getSrc(img) for img in b.find_all('img')]
+def getImgs(b, path):
+	raw = [getSrc(img, path) for img in b.find_all('img')]
 	return [x for x in raw if x]
 
 def getVideo(b):
@@ -79,7 +85,7 @@ def get(path, force_cache=False):
 	content = cached_url.get(path, force_cache=force_cache)
 	b = BeautifulSoup(content, features='lxml')
 	result = Result()
-	result.imgs = getImgs(b)
+	result.imgs = getImgs(b, path)
 	result.cap = getCap(b, path)
 	if result.imgs and not result.cap:
 		# don't know if this is the right thing to do, revisit if needed
