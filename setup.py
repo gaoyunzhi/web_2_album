@@ -24,7 +24,8 @@ setuptools.setup(
         'telegram_util',
         'pic_cut',
         'export_to_telegraph',
-        'readee'
+        'readee',
+        'pyyaml',
     ],
     python_requires='>=3.0',
 )

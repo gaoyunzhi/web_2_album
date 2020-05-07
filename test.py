@@ -18,3 +18,4 @@ def test(url, rotate=False):
 	
 if __name__=='__main__':
 	test('https://www.reddit.com/r/PoliticalCompassMemes/comments/gep6km/the_political_compass_but_its_chinese_internet/')
+	# test('https://card.weibo.com/article/m/show/id/2309404499387479883873')

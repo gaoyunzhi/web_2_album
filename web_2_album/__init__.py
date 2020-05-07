@@ -6,9 +6,11 @@ name = 'web_2_album'
 import cached_url
 from bs4 import BeautifulSoup
 import export_to_telegraph
-from telegram_util import matchKey, cutCaption
+from telegram_util import matchKey, cutCaption, getWid
 from telegram_util import AlbumResult as Result
 import readee
+import time
+import yaml
 
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
 	'RichText', 'image-container']
@@ -41,12 +43,13 @@ def getCapForce(b, path):
 		return b.find('h1').text
 	# don't know if this is the right thing to do, revisit if needed
 	center = readee.export(path, content = str(b))
-	with open('tmp/center.html', 'w') as f:
-		f.write(str(center))
 	try:
 		return cutCaption(center.get_text(separator='\n').strip(), '', 200)
 	except:
 		return ''
+
+def isWeiboArticle(path):
+	return matchKey(path, ['card', 'ttarticle']) and 'weibo.c' in path
 
 def getSrc(img, path):
 	src = img.get('data-original') or img.get('data-actualsrc') or \
@@ -59,6 +62,8 @@ def getSrc(img, path):
 		if img.parent.name != 'a':
 			return
 		return img.parent['href']
+	if isWeiboArticle(path) and 'sinaimg' in src:
+		return src
 	wrapper = img.parent.parent
 	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
 		return src
@@ -81,8 +86,18 @@ def getVideo(b):
 			continue
 		return video['src']
 
+def getContent(path, force_cache=False):
+	if isWeiboArticle(path):
+		new_url = ('https://card.weibo.com/article/m/aj/detail?id=' + 
+			getWid(path) + '&_t=' + str(int(time.time())))
+		json = yaml.load(
+			cached_url.get(new_url, headers={'referer': path}, force_cache=force_cache), 
+			Loader=yaml.FullLoader)
+		return '<div><title>%s</title>%s</div>' % (json['data']['title'], json['data']['content'])
+	return cached_url.get(path, force_cache=force_cache)
+
 def get(path, force_cache=False):
-	content = cached_url.get(path, force_cache=force_cache)
+	content = getContent(path, force_cache=force_cache)
 	b = BeautifulSoup(content, features='lxml')
 	result = Result()
 	result.imgs = getImgs(b, path)
