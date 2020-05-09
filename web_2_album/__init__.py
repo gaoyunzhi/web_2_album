@@ -13,7 +13,7 @@ import time
 import yaml
 
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
-	'RichText', 'image-container']
+	'RichText', 'image-container', 'news_txt', 'article_con']
 
 try:
 	with open('CREDENTIALS') as f:
@@ -39,8 +39,9 @@ def getCap(b, path):
 	return export_to_telegraph.exportAllInText(wrapper)
 
 def getCapForce(b, path):
-	if b.find('h1'):
-		return b.find('h1').text
+	for name in ['h1', 'h2']:
+		if b.find(name):
+			return b.find(name).text
 	# don't know if this is the right thing to do, revisit if needed
 	center = readee.export(path, content = str(b))
 	try:
@@ -65,6 +66,7 @@ def getSrc(img, path):
 	if isWeiboArticle(path) and 'sinaimg' in src:
 		return src
 	wrapper = img.parent.parent
+	print(str(wrapper.get('class')))
 	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
 		return src
 	return
