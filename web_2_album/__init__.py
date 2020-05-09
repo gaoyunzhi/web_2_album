@@ -66,7 +66,6 @@ def getSrc(img, path):
 	if isWeiboArticle(path) and 'sinaimg' in src:
 		return src
 	wrapper = img.parent.parent
-	print(str(wrapper.get('class')))
 	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
 		return src
 	return
