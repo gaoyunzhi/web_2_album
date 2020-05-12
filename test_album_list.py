@@ -4,7 +4,7 @@ from test import test
 import time
 
 start = False
-start_on = '110562791'
+start_on = '74171797'
 
 def findAlbumUrl(soup):
 	for album in soup.find_all('div', class_='title'):
@@ -28,7 +28,7 @@ def process(root, total_page):
 					test(album_url)
 				except:
 					pass
-				time.sleep(45)
+				time.sleep(120)
 
 if __name__=='__main__':
 	process('https://www.douban.com/doulist/3589810/', 5)
