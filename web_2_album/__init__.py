@@ -11,9 +11,10 @@ from telegram_util import AlbumResult as Result
 import readee
 import time
 import yaml
+import sys
 
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
-	'RichText', 'image-container', 'news_txt', "'article_con'"]
+	'RichText', 'image-container', 'news_txt', "'article_con'", 'photo_wrap']
 
 try:
 	with open('CREDENTIALS') as f:
@@ -41,7 +42,11 @@ def getCap(b, path):
 def getCapForce(b, path):
 	for name in ['h1', 'h2']:
 		if b.find(name):
-			return b.find(name).text
+			text = b.find(name).text
+			if 'douban' in path:
+				return text.split('-')[-1]
+			else:
+				return text
 	# don't know if this is the right thing to do, revisit if needed
 	center = readee.export(path, content = str(b))
 	try:
@@ -66,13 +71,19 @@ def getSrc(img, path):
 	if isWeiboArticle(path) and 'sinaimg' in src:
 		return src
 	wrapper = img.parent.parent
-	# print(str(wrapper.get('class')))
+	if 'detail' in sys.argv:
+		print(str(wrapper.get('class')))
 	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
 		return src
 	return
 
+def enlarge(src):
+	if not src:
+		return None
+	return src.replace('/m/', '/l/')
+
 def getImgs(b, path):
-	raw = [getSrc(img, path) for img in b.find_all('img')]
+	raw = [enlarge(getSrc(img, path)) for img in b.find_all('img')]
 	return [x for x in raw if x]
 
 def getVideo(b):

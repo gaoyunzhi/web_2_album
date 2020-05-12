@@ -18,7 +18,7 @@ channel = tele.bot.get_chat(-1001399998441)
 def test(url, rotate=False):
 	result = web_2_album.get(url)
 	# print(result)
-	album_sender.send(chat, url, result, rotate=rotate)
+	album_sender.send(channel, url, result, rotate=rotate)
 
 def findSrc(item):
 	START_PIVOT = '"src":"'
@@ -43,5 +43,4 @@ def sendPhotos(url):
 	
 if __name__=='__main__':
 	# test('https://www.reddit.com/r/PoliticalCompassMemes/comments/gep6km/the_political_compass_but_its_chinese_internet/')
-	test('https://www.thepaper.cn/newsDetail_forward_1683187')
-	test('https://telegra.ph/情趣用品市场崛起女性解放还是新一轮规训-05-09')
+	test('https://www.douban.com/photos/album/118836636/')
