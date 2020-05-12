@@ -4,7 +4,7 @@ from test import test
 import time
 
 start = False
-start_on = '48726227'
+start_on = '110562791'
 
 def findAlbumUrl(soup):
 	for album in soup.find_all('div', class_='title'):
@@ -24,7 +24,10 @@ def process(root, total_page):
 				start = True
 				continue
 			if start:
-				test(album_url)
+				try:
+					test(album_url)
+				except:
+					pass
 				time.sleep(45)
 
 if __name__=='__main__':
