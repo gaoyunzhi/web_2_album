@@ -1,9 +1,10 @@
 from bs4 import BeautifulSoup
 import cached_url
 from test import test
+import time
 
 start = False
-start_on = '1658225696'
+start_on = '48726227'
 
 def findAlbumUrl(soup):
 	for album in soup.find_all('div', class_='title'):
@@ -24,6 +25,7 @@ def process(root, total_page):
 				continue
 			if start:
 				test(album_url)
+				time.sleep(45)
 
 if __name__=='__main__':
 	process('https://www.douban.com/doulist/3589810/', 5)
