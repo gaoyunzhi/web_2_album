@@ -26,8 +26,8 @@ def process(root, total_page):
 			if start:
 				try:
 					test(album_url)
-				except:
-					pass
+				except Exception as e:
+					print(album_url, str(e))
 				time.sleep(120)
 
 if __name__=='__main__':
