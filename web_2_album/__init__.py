@@ -15,7 +15,7 @@ import sys
 
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
 	'RichText', 'image-container', 'news_txt', "'article_con'", 
-	'photo_wrap', 'hideBeforeLoad']
+	'photo_wrap', 'hideBeforeLoad', 'slide_container']
 
 try:
 	with open('CREDENTIALS') as f:
@@ -59,8 +59,9 @@ def isWeiboArticle(path):
 	return matchKey(path, ['card', 'ttarticle']) and 'weibo.c' in path
 
 def getSrc(img, path):
-	src = img.get('data-original') or img.get('data-actualsrc') or \
-		(img.get('src') and img.get('src').strip())
+	src = (img.get('data-full') or img.get('data-original') or 
+		img.get('data-actualsrc') or img.get('src'))
+	src = src and src.strip()
 	if not src:
 		return 
 	if not img.parent or not img.parent.parent:
@@ -69,6 +70,8 @@ def getSrc(img, path):
 		if img.parent.name != 'a':
 			return
 		return img.parent['href']
+	if 'blog.boxun' in path:
+		return '/'.join(path.split('/')[:-1] + [src])
 	if isWeiboArticle(path) and 'sinaimg' in src:
 		return src
 	wrapper = img.parent.parent
@@ -84,6 +87,8 @@ def enlarge(src):
 	return src.replace('/m/', '/l/')
 
 def withDomain(path, x):
+	if 'slideshare' in x:
+		x = x.split('?')[0]
 	if x and x[0] == '/':
 		return parseDomain(path) + x
 	return x
