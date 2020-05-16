@@ -43,4 +43,4 @@ def sendPhotos(url):
 	
 if __name__=='__main__':
 	# test('https://www.reddit.com/r/PoliticalCompassMemes/comments/gep6km/the_political_compass_but_its_chinese_internet/')
-	test('https://www.douban.com/photos/album/118836636/')
+	test('https://www.dw.com/zh/%E5%85%AD%E5%9B%9B%E6%97%A5%E8%AE%B0%E5%9B%BE%E7%89%87%E9%9B%86/g-16857407')

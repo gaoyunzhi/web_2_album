@@ -6,7 +6,7 @@ name = 'web_2_album'
 import cached_url
 from bs4 import BeautifulSoup
 import export_to_telegraph
-from telegram_util import matchKey, cutCaption, getWid
+from telegram_util import matchKey, cutCaption, getWid, parseDomain
 from telegram_util import AlbumResult as Result
 import readee
 import time
@@ -14,7 +14,8 @@ import yaml
 import sys
 
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
-	'RichText', 'image-container', 'news_txt', "'article_con'", 'photo_wrap']
+	'RichText', 'image-container', 'news_txt', "'article_con'", 
+	'photo_wrap', 'hideBeforeLoad']
 
 try:
 	with open('CREDENTIALS') as f:
@@ -82,9 +83,14 @@ def enlarge(src):
 		return None
 	return src.replace('/m/', '/l/')
 
+def withDomain(path, x):
+	if x and x[0] == '/':
+		return parseDomain(path) + x
+	return x
+
 def getImgs(b, path):
 	raw = [enlarge(getSrc(img, path)) for img in b.find_all('img')]
-	return [x for x in raw if x]
+	return [withDomain(path, x) for x in raw if x]
 
 def getVideo(b):
 	for video in b.find_all('video'):
