@@ -44,4 +44,4 @@ def sendPhotos(url):
 	
 if __name__=='__main__':
 	# test('https://www.reddit.com/r/PoliticalCompassMemes/comments/gep6km/the_political_compass_but_its_chinese_internet/')
-	test('https://www.slideshare.net/ssuser3fd4cd/1989641')
+	test('https://mp.weixin.qq.com/s?__biz=MzA4MzM2OTczMg==&amp;mid=2247502649&amp;idx=1&amp;sn=8c0ddd85a33877922dbc0c4627700704&amp;chksm=9ff50152a8828844287bd4cdc7ab87003a525f26535027087bf9feec12e57820d40775684064&amp;mpshare=1&amp;scene=1&amp;srcid=0517sQUJEOlScVlNPwI7TOgH&amp;sharer_sharetime=1589709749357&amp;sharer_shareid=ac6cbafa374000428a0e58fcfb7c4b29#rd')

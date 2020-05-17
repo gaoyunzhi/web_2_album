@@ -60,7 +60,7 @@ def isWeiboArticle(path):
 
 def getSrc(img, path):
 	src = (img.get('data-full') or img.get('data-original') or 
-		img.get('data-actualsrc') or img.get('src'))
+		img.get('data-actualsrc') or img.get('src') or img.get('data-src'))
 	src = src and src.strip()
 	if not src:
 		return 
