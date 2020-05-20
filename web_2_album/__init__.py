@@ -31,6 +31,9 @@ def getCap(b, path):
 		b.find('p', id='first', class_='lead'))
 	if 'douban' in path:
 		wrapper = b.find('blockquote') or wrapper
+		title = b.find('td', class_='tablecc')
+		if title:
+			return title.text[3:]
 	if 'zhihu' in path:
 		answer = b.find('div', class_='RichContent-inner')
 		answer = answer and answer.text.strip()
