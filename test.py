@@ -44,4 +44,4 @@ def sendPhotos(url):
 	
 if __name__=='__main__':
 	# test('https://www.reddit.com/r/PoliticalCompassMemes/comments/gep6km/the_political_compass_but_its_chinese_internet/')
-	test('https://www.douban.com/people/34918814/status/2967489003/')
+	test('https://tingmm.wordpress.com/2020/04/06/guillaume-queau-juan-gil-by-chloe-bowman/')
