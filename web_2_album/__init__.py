@@ -134,4 +134,5 @@ def get(path, force_cache=False):
 		# don't know if this is the right thing to do, revisit if needed
 		result.cap = getCapForce(b, path)
 	result.video = getVideo(b)
+	result.url = path
 	return result
