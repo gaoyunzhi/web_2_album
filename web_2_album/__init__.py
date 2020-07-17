@@ -16,7 +16,7 @@ import sys
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
 	'RichText', 'image-container', 'news_txt', "'article_con'", 
 	'photo_wrap', 'hideBeforeLoad', 'slide_container', 'rich_media_content',
-	'is-widgets', 'entry-content']
+	'is-widgets', 'entry-content', 'image-show']
 
 try:
 	with open('CREDENTIALS') as f:
