@@ -13,7 +13,7 @@ with open('CREDENTIALS') as f:
 	CREDENTIALS = yaml.load(f, Loader=yaml.FullLoader)
 tele = Updater(CREDENTIALS['bot_token'], use_context=True)
 chat = tele.bot.get_chat(-1001198682178)
-# chat = tele.bot.get_chat('@web_record')
+chat = tele.bot.get_chat('@web_record')
 
 def test(url, rotate=False):
 	result = web_2_album.get(url)
@@ -43,4 +43,4 @@ def sendPhotos(url):
 		sendPhoto(url, item)
 	
 if __name__=='__main__':
-	test('https://www.saatchiart.com/account/artworks/718101')
+	test('https://note.com/tomomishimizu/n/n735f37a0ca1f')

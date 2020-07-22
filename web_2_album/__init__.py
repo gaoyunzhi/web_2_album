@@ -16,7 +16,7 @@ import sys
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
 	'RichText', 'image-container', 'news_txt', "'article_con'", 
 	'photo_wrap', 'hideBeforeLoad', 'slide_container', 'rich_media_content',
-	'is-widgets', 'entry-content', 'image-show']
+	'is-widgets', 'entry-content', 'image-show', 'o-noteContentImage__item']
 
 try:
 	with open('CREDENTIALS') as f:
@@ -62,9 +62,17 @@ def getCapForce(b, path):
 def isWeiboArticle(path):
 	return matchKey(path, ['card', 'ttarticle']) and 'weibo.c' in path
 
+def isValidSrc(candidate):
+	return candidate and not matchKey(candidate, ['data:image'])
+
+def getValidSrc(*candidates):
+	for candidate in candidates:
+		if isValidSrc(candidate):
+			return candidate
+
 def getSrc(img, path):
-	src = (img.get('data-full') or img.get('data-original') or 
-		img.get('data-actualsrc') or img.get('src') or img.get('data-src'))
+	src = getValidSrc(img.get('data-full'), img.get('data-original'), 
+		img.get('data-actualsrc'), img.get('src'), img.get('data-src'))
 	src = src and src.strip()
 	if not src:
 		return 
@@ -82,6 +90,7 @@ def getSrc(img, path):
 	if 'detail' in sys.argv:
 		print(str(wrapper.get('class')))
 	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
+		print(img)
 		return src
 	return
 
