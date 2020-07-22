@@ -91,6 +91,8 @@ def enlarge(src):
 	return src.replace('/m/', '/l/')
 
 def withDomain(path, x):
+	if x.startswith('//'):
+		return 'https:' + x
 	if 'slideshare' in x:
 		x = x.split('?')[0]
 	if x and x[0] == '/':

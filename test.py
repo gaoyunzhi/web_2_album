@@ -43,5 +43,4 @@ def sendPhotos(url):
 		sendPhoto(url, item)
 	
 if __name__=='__main__':
-	# test('https://www.reddit.com/r/PoliticalCompassMemes/comments/gep6km/the_political_compass_but_its_chinese_internet/')
-	test('https://www.douban.com/photos/album/1684114228/')
+	test('https://www.saatchiart.com/account/artworks/718101')
