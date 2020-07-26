@@ -17,7 +17,7 @@ chat = tele.bot.get_chat('@web_record')
 
 def test(url, rotate=False):
 	result = web_2_album.get(url)
-	print(result)
+	# print(result)
 	album_sender.send(chat, url, result, rotate=rotate)
 
 def findSrc(item):
@@ -43,4 +43,4 @@ def sendPhotos(url):
 		sendPhoto(url, item)
 	
 if __name__=='__main__':
-	test('https://note.com/tomomishimizu/n/n735f37a0ca1f')
+	test('https://www.boredpanda.com/little-kids-big-dogs-friendship-photography-andy-seliverstoff/')

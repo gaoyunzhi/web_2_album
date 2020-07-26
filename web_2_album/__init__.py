@@ -16,7 +16,9 @@ import sys
 IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper', 
 	'RichText', 'image-container', 'news_txt', "'article_con'", 
 	'photo_wrap', 'hideBeforeLoad', 'slide_container', 'rich_media_content',
-	'is-widgets', 'entry-content', 'image-show', 'o-noteContentImage__item']
+	'is-widgets', 'entry-content', 'image-show', 
+	'o-noteContentImage__item', 'open-list-post-description',
+	'open-list-media-container']
 
 try:
 	with open('CREDENTIALS') as f:
@@ -90,7 +92,6 @@ def getSrc(img, path):
 	if 'detail' in sys.argv:
 		print(str(wrapper.get('class')))
 	if matchKey(str(wrapper.get('class')) or '', IMG_CLASSES):
-		print(img)
 		return src
 	return
 
