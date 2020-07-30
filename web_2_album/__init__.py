@@ -18,7 +18,7 @@ IMG_CLASSES = ['f-m-img', 'group-pic', 'image-wrapper',
 	'photo_wrap', 'hideBeforeLoad', 'slide_container', 'rich_media_content',
 	'is-widgets', 'entry-content', 'image-show', 
 	'o-noteContentImage__item', 'open-list-post-description',
-	'open-list-media-container']
+	'open-list-media-container', 'cover']
 
 try:
 	with open('CREDENTIALS') as f:
