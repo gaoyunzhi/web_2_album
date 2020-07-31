@@ -17,8 +17,7 @@ chat = tele.bot.get_chat('@web_record')
 
 def test(url, rotate=False):
 	result = web_2_album.get(url)
-	# print(result)
-	album_sender.send(chat, url, result, rotate=rotate)
+	album_sender.send_v2(chat, result, rotate=rotate)
 
 def findSrc(item):
 	START_PIVOT = '"src":"'
