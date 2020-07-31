@@ -22,7 +22,6 @@ setuptools.setup(
         'cached_url',
         'bs4',
         'telegram_util',
-        'pic_cut',
         'export_to_telegraph',
         'readee',
         'pyyaml',
