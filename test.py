@@ -41,4 +41,4 @@ def sendPhotos(url):
 		sendPhoto(url, item)
 	
 if __name__=='__main__':
-	test('https://telegra.ph/This-Photographer-Is-Empowering-Trans-Youth-Through-Art-11-17-48')
+	test('https://www.pride.com/art/2018/5/10/photographer-empowering-trans-youth-through-art?fbclid=IwAR1WM82jyIovZRmLQwgJtBTExGGy-_py6SnOirDb2_IEjEAxxzqyKCjqLxY#media-gallery-media-1')
