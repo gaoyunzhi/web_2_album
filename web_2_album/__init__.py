@@ -96,10 +96,13 @@ def getSrc(img, path):
 		return src
 	return
 
-def enlarge(src):
+def enlarge(src, img):
 	if not src:
 		return None
-	return src.replace('/m/', '/l/')
+	src = src.replace('/m/', '/l/')
+	if 'animate' in img.parent.get('class'):
+		src = '.'.join(src.split('.')[:-1]) + '.mp4'
+	return src
 
 def withDomain(path, x):
 	if x.startswith('//'):
@@ -111,7 +114,7 @@ def withDomain(path, x):
 	return x
 
 def getImgs(b, path):
-	raw = [enlarge(getSrc(img, path)) for img in b.find_all('img')]
+	raw = [enlarge(getSrc(img, path), img) for img in b.find_all('img')]
 	return [withDomain(path, x) for x in raw if x]
 
 def getVideo(b):
