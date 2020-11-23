@@ -42,4 +42,4 @@ def sendPhotos(url):
 		sendPhoto(url, item)
 	
 if __name__=='__main__':
-	test('https://www.douban.com/people/2627485/status/3185647338/')
+	test('https://www.douban.com/people/83066916/status/3174621882/')
