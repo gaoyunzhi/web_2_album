@@ -34,7 +34,11 @@ def getCap(b, path):
 		b.find('div', class_='topic-richtext') or
 		b.find('p', id='first', class_='lead'))
 	if 'douban' in path:
+		topic = b.find('p', class_='topic-say')
+		topic = topic and topic.text
 		wrapper = b.find('blockquote') or wrapper
+		if topic and wrapper:
+			wrapper.insert(0, '【%s】' % topic)
 		title = b.find('td', class_='tablecc')
 		if title:
 			return title.text[3:]
