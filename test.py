@@ -42,4 +42,4 @@ def sendPhotos(url):
 		sendPhoto(url, item)
 	
 if __name__=='__main__':
-	test('https://www.douban.com/people/216958127/status/3193085959/')
+	test('https://telegra.ph/Graphics-12-01')

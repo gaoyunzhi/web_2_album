@@ -104,7 +104,7 @@ def enlarge(src, img):
 	if not src:
 		return None
 	src = src.replace('/m/', '/l/')
-	if 'animate' in img.parent.get('class'):
+	if 'animate' in img.parent.get('class', ''):
 		src = '.'.join(src.split('.')[:-1]) + '.mp4'
 	return src
 
