@@ -145,6 +145,7 @@ def getContent(path, force_cache=False):
 	return cached_url.get(path, force_cache=force_cache)
 
 def get(path, force_cache=False):
+	path = path.replace('m.douban.com', 'www.douban.com')
 	content = getContent(path, force_cache=force_cache)
 	b = BeautifulSoup(content, features='lxml')
 	result = Result()
